@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tatiane.CRUD.Repositories.UserRepository;
+import com.tatiane.CRUD.Services.exceptions.ResourceNotFoundException;
 import com.tatiane.CRUD.entities.User;
 
 @Service
@@ -20,7 +21,7 @@ public class UserServices {
 	}
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()->new ResourceNotFoundException(id));
 	}
 	public User insert(User obj) {
 		return repository.save(obj);
